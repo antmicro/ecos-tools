@@ -1,0 +1,17 @@
+# location of ecos files
+export ECOS_REPOSITORY="{path/to/repository}/packages"
+
+# add toolchain to path
+export PATH="$PATH:{path/to/toolchain}/bin"
+
+# ecos kernel configuration (ecc) file
+ECC="{filename.ecc}"
+
+# provide all application source code files separated by spaces
+FILES="{file1.c} {file2.c} {file3.c}"
+
+# provide compiler options
+# for cortex-a9, uncomment this instead
+# OPT="-mcpu=cortex-a9 -Wpointer-arith -Winline -Wundef -g -O2 -nostdlib -ffunction-sections -fdata-sections -fno-exceptions"
+
+OPT="-mcpu=cortex-m3 -mthumb -std=gnu99 -Wpointer-arith -Winline -Wundef -g -O2 -nostdlib -ffunction-sections -fdata-sections -fno-exceptions"
