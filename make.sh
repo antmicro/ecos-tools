@@ -36,6 +36,8 @@ make
 
 cd ..
 
+OPT="-std=gnu99 -Wpointer-arith -Winline -Wundef -g -nostdlib -ffunction-sections -fdata-sections -fno-exceptions"
+
 # compile the application
 arm-none-eabi-gcc -g -I./ -g -I${KPATH}/install/include ${FILES} \
-	-L${KPATH}/install/lib -Ttarget.ld ${OPT} -o $1 
+	-L${KPATH}/install/lib -Ttarget.ld ${ARCH_OPT} ${OPT} ${ADD_OPT} -o $1 
