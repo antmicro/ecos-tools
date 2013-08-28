@@ -3,6 +3,12 @@ ECos tools
 
 This is a repository for some minimal eCos tools.
 
+Prerequisites
+-------------
+
+``ecosconfig`` requires the tcl compiler to work. For Debian or Ubuntu development platforms the proper package is named ``tcl8.5``, you can install it using: ``sudo apt-get install tcl8.5``.
+For Gentoo platforms the package is named ``dev-lang/tcl``, you can install it using: ``sudo emerge dev-lang/tcl``.
+
 Compiling an eCos program
 -------------------------
 
