@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 TOOLS_PATH=$(dirname $(readlink -f $0))
 
