@@ -9,6 +9,12 @@ Prerequisites
 ``ecosconfig`` requires the tcl compiler to work. For Debian or Ubuntu development platforms the proper package is named ``tcl8.5``, you can install it using: ``sudo apt-get install tcl8.5``.
 For Gentoo platforms the package is named ``dev-lang/tcl``, you can install it using: ``sudo emerge dev-lang/tcl``.
 
+Paths
+-----
+
+The toolkit should be relative-path-resistant, meaning that you can just put it anywhere on the system and work from your own directory.
+Make a local or global symlink to ``make.sh`` if you like, keep your ``.ecc`` files wherever you want etc.
+
 Compiling an eCos application
 -----------------------------
 
