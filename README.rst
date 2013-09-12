@@ -12,7 +12,13 @@ For Gentoo platforms the package is named ``dev-lang/tcl``, you can install it u
 Compiling an eCos application
 -----------------------------
 
-Create a ``config.<name>`` file and set the appropriate paths/options based on the ``config.example`` file.
+Create a ``<name>.config`` file and set the appropriate paths/options based on the ``example.config`` file.
 
-Run ``make.sh <name>`` to build both kernel and application code.
-Compiling the application without rebuilding the kernel is not possible at the moment.
+Run ``make.sh --config=<name>`` to build the eCos kernel. If the FILES variable was set, also build the application code and link it against the kernel.
+
+Available flags
+---------------
+
+* ``-o=<fname>|--output-filename=<fname>`` to set an output filename if building an application, default is ``<name>``
+* ``-t|--tests`` to build the eCos test suite 
+* ``-r|--rebuild`` to force rebuilding the kernel 
