@@ -15,6 +15,7 @@ Compiling eCos
 Create a ``<name>.config`` file and set the appropriate paths/options based on the ``example.config`` file.
 
 Run ``make.sh --config=<name>`` to build:
+
 * the eCos kernel if the ``.ecc`` is set to compile eCos and the FILES variable is empty
 * your eCos application and the kernel if the FILES variable is set
 * RedBoot if the ``.ecc`` is set to compile RedBoot
