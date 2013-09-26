@@ -6,6 +6,11 @@ function get_option {
     VALUE=`echo $1 | sed 's/[-a-zA-Z0-9]*=//'`
 }
 
+function ecc_get_value {
+    echo `cat $ECC | grep $1 -A 100 | grep user_value | head -1 | sed 's,user_value,|,g' | cut -f 2 -d '|' | tr -d '"'`
+}
+
+
 function usage {
         echo "Usage: `basename $0` --config=<config-name> (--kernel|--output-filename=<filename>|--tests|--rebuild)"
 }
@@ -63,6 +68,9 @@ fi
 ECOS_REPOSITORY=`readlink -f $ECOS_REPOSITORY`
 ECC=`readlink -f $ECC`
 
+GCC=`ecc_get_value CYGBLD_GLOBAL_COMMAND_PREFIX`-gcc
+CFLAGS=`ecc_get_value CYGBLD_GLOBAL_CFLAGS`
+
 mkdir -p $CONFIG\_build
 if $REBUILD ; then
   rm -rf $CONFIG\_build/*
@@ -85,8 +93,8 @@ then
    if [ -z $OUTPUT_FILENAME ] ; then
       OUTPUT_FILENAME=$CONFIG
    fi
-   # compile the application and link it against kernel
-   OPT="-std=gnu99 -Wpointer-arith -Winline -Wundef -g -nostdlib -ffunction-sections -fdata-sections -fno-exceptions"
-   arm-none-eabi-gcc -g -I./ -g -I${KPATH}/install/include ${FILES} \
-   	-L${KPATH}/install/lib -Ttarget.ld ${ARCH_OPT} ${OPT} ${ADD_OPT} -o $OUTPUT_FILENAME
+   
+echo "Compiling eCos application..."
+PATH="${TOOLS_PATH}:$PATH" $GCC -g -I./ -g -I${KPATH}/install/include ${FILES} \
+   	-L${KPATH}/install/lib -Ttarget.ld ${CFLAGS} ${ADD_OPT} -nostdlib -o $OUTPUT_FILENAME
 fi
