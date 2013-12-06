@@ -12,7 +12,8 @@ function ecc_get_value {
 
 
 function usage {
-        echo "Usage: `basename $0` --config=<config-name> (--kernel|--output-filename=<filename>|--tests|--rebuild)"
+        echo "Usage: `basename $0` --config=<config-name> (--output-filename=<filename>|--tests|--rebuild)"
+        echo "       Use a config with FILES='' to just generate a kernel"
 }
 
 TESTS=false
