@@ -42,7 +42,7 @@ do
     esac
 done
 
-if [ -z $CONFIG ]
+if [[ -z $CONFIG ]]
 then
     echo "FATAL: No config file provided."
     usage
@@ -51,7 +51,7 @@ fi
 
 CONFIG_FILE=$CONFIG.config
 
-if [ ! -e $CONFIG_FILE ]
+if [[ ! -e $CONFIG_FILE ]]
 then
     echo "FATAL: The config file \"$CONFIG_FILE\" does not exist."
     exit 1
@@ -60,7 +60,7 @@ fi
 # include config file to set appropriate variables
 . ./$CONFIG_FILE
 
-if [ -z $ECOS_REPOSITORY ] || [ -z $ECC ]
+if [[ -z $ECOS_REPOSITORY ]] || [[ -z $ECC ]]
 then
     echo "FATAL: The variables \"ECOS_REPOSITORY\" AND \"ECC\" have not been set properly."
     exit 1
@@ -89,9 +89,9 @@ fi
 
 cd ..
 
-if [ ! -z $FILES ]
+if [[ ! -z $FILES ]]
 then
-    if [ -z $OUTPUT_FILENAME ] ; then
+    if [[ -z $OUTPUT_FILENAME ]]; then
         OUTPUT_FILENAME=$CONFIG
     fi
 
