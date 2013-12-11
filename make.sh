@@ -10,14 +10,10 @@ function ecc_get_value {
     echo `cat $ECC | grep $1 -A 100 | grep user_value | head -1 | sed 's,user_value,|,g' | cut -f 2 -d '|' | tr -d '"'`
 }
 
-
 function usage {
     echo "Usage: `basename $0` --config=<config-name> (--output-filename=<filename>|--tests|--rebuild)"
     echo "       Use a config with FILES='' to just generate a kernel"
 }
-
-TESTS=false
-REBUILD=false
 
 for i in "$@"
 do
@@ -73,14 +69,14 @@ GCC=`ecc_get_value CYGBLD_GLOBAL_COMMAND_PREFIX`-gcc
 CFLAGS=`ecc_get_value CYGBLD_GLOBAL_CFLAGS`
 
 mkdir -p $CONFIG\_build
-if $REBUILD ; then
+if "${REBUILD:-false}"; then
     rm -rf $CONFIG\_build/*
 fi
 cd $CONFIG\_build
 KPATH=`pwd`
 
 $TOOLS_PATH/ecosconfig --config=$ECC tree
-if $TESTS ; then
+if "${TESTS:-false}"; then
     make tests
     exit
 else
