@@ -1,17 +1,18 @@
 #!/bin/bash
 
-TOOLS_PATH=$(dirname $(readlink -f $0))
+TOOLS_PATH="$(dirname $(readlink -f $0))"
 
 function get_option {
-    VALUE=`echo $1 | sed 's/[-a-zA-Z0-9]*=//'`
+    VALUE="$(echo $1 | sed 's/[-a-zA-Z0-9]*=//')"
 }
 
 function ecc_get_value {
-    echo `cat $ECC | grep $1 -A 100 | grep user_value | head -1 | sed 's,user_value,|,g' | cut -f 2 -d '|' | tr -d '"'`
+    echo $(cat $ECC | grep $1 -A 100 | grep user_value | head -1 |\
+        sed 's,user_value,|,g' | cut -f 2 -d '|' | tr -d '"')
 }
 
 function usage {
-    echo "Usage: `basename $0` --config=<config-name> (--output-filename=<filename>|--tests|--rebuild)"
+    echo "Usage: $(basename $0) --config=<config-name> (--output-filename=<filename>|--tests|--rebuild)"
     echo "       Use a config with FILES='' to just generate a kernel"
 }
 
@@ -62,18 +63,18 @@ then
     exit 1
 fi
 
-ECOS_REPOSITORY=`readlink -f $ECOS_REPOSITORY`
-ECC=`readlink -f $ECC`
+ECOS_REPOSITORY=$(readlink -f $ECOS_REPOSITORY)
+ECC=$(readlink -f $ECC)
 
-GCC=`ecc_get_value CYGBLD_GLOBAL_COMMAND_PREFIX`-gcc
-CFLAGS=`ecc_get_value CYGBLD_GLOBAL_CFLAGS`
+GCC=$(ecc_get_value CYGBLD_GLOBAL_COMMAND_PREFIX)-gcc
+CFLAGS=$(ecc_get_value CYGBLD_GLOBAL_CFLAGS)
 
 mkdir -p $CONFIG\_build
 if "${REBUILD:-false}"; then
     rm -rf $CONFIG\_build/*
 fi
 cd $CONFIG\_build
-KPATH=`pwd`
+KPATH=$(pwd)
 
 $TOOLS_PATH/ecosconfig --config=$ECC tree
 if "${TESTS:-false}"; then
