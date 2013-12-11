@@ -73,7 +73,7 @@ mkdir -p "$CONFIG"\_build
 if "${REBUILD:-false}"; then
     rm -rf "$CONFIG"\_build/*
 fi
-cd "$CONFIG"\_build
+pushd "$CONFIG"\_build
 KPATH="$(pwd)"
 
 "$TOOLS_PATH"/ecosconfig --config="$ECC" tree
@@ -84,7 +84,7 @@ else
     make
 fi
 
-cd ..
+popd
 
 if [[ ! -z "$FILES" ]]
 then
