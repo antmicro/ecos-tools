@@ -7,7 +7,7 @@ function get_option {
 }
 
 function ecc_get_value {
-    echo $(cat $ECC | grep $1 -A 100 | grep user_value | head -1 |\
+    echo $(grep $1 $ECC -A 100 | grep user_value | head -1 |\
         sed 's,user_value,|,g' | cut -f 2 -d '|' | tr -d '"')
 }
 
