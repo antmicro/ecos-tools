@@ -89,7 +89,7 @@ fi
 
 cd ..
 
-if [ ! -z $FILES ]
+if [ ! -z "$FILES" ]
 then
    if [ -z $OUTPUT_FILENAME ] ; then
       OUTPUT_FILENAME=$CONFIG
