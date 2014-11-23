@@ -1,6 +1,7 @@
 #!/bin/bash
 
-TOOLS_PATH=$(dirname $(readlink -f $0))
+# check for ecosconfig
+command -v ecosconfig >/dev/null 2>&1 || { echo >&2 "FATAL: ecosconfig is not installed in the system. Put it in /usr/local/bin or an equivalent location."; exit 1; }
 
 function get_option {
     VALUE=`echo $1 | sed 's/[-a-zA-Z0-9]*=//'`
@@ -57,6 +58,14 @@ then
 	exit 1
 fi
 
+TPATH_FILE=$CONFIG.tpath
+
+if [ -e $TPATH_FILE ]
+then
+	# include the toolchain path file, if it exits
+	export PATH="`cat $TPATH_FILE`:$PATH"
+fi
+
 # include config file to set appropriate variables
 . ./$CONFIG_FILE
 
@@ -72,6 +81,9 @@ fi
 GCC=`ecc_get_value CYGBLD_GLOBAL_COMMAND_PREFIX`-gcc
 CFLAGS=`ecc_get_value CYGBLD_GLOBAL_CFLAGS`
 
+# check for compiler
+command -v $GCC >/dev/null 2>&1 || { echo >&2 "FATAL: The required compiler ($GCC) does not exist in your PATH. Did you forget an appropriate $CONFIG.tpath file?"; exit 1; }
+
 mkdir -p $CONFIG\_build
 if $REBUILD ; then
   rm -rf $CONFIG\_build/*
@@ -79,7 +91,7 @@ fi
 cd $CONFIG\_build
 KPATH=`pwd`
 
-$TOOLS_PATH/ecosconfig --config=$ECC tree
+ecosconfig --config=$ECC tree
 if $TESTS ; then
    make tests
    exit
@@ -96,6 +108,6 @@ then
    fi
    
 echo "Compiling eCos application..."
-PATH="${TOOLS_PATH}:$PATH" $GCC -g -I./ -g -I${KPATH}/install/include ${FILES} \
+$GCC -g -I./ -g -I${KPATH}/install/include ${FILES} \
    	-L${KPATH}/install/lib -Ttarget.ld ${CFLAGS} ${ADD_OPT} -nostdlib -o $OUTPUT_FILENAME
 fi
