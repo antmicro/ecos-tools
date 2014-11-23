@@ -20,14 +20,24 @@ Put ``ecosconfig`` in a system-wide localisation (like ``/usr/local/bin``) so th
 
    ``configtool``, a graphical tool for editing ``.ecc`` files, is also provided in this repository for convenience but not a prerequisite.
 
-Compiling eCos and your application
------------------------------------
+Usage
+-----
+
+``make.sh`` and config file
++++++++++++++++++++++++++++
 
 Copy ``make.sh`` and ``example.config`` to the repository where you are developing your eCos application, renaming the latter to ``<your-app-name>.config``, and edit the file to set the appropriate paths/options based on the instructions included in the file.
 
-If the appropriate compiler is not available in your PATH, you may create an optional ``<your-app-name>.tpath`` file in the same directory.
-Put the absolute path to the toolchain's ``bin/`` directory there (i.e. ``echo "</path/to/toolchain>/bin" > <your-app-name>.tpath``
+Compiler
+++++++++
+
+If the appropriate compiler (read automatically from the ``.ecc`` file) is not available in your PATH, you may create an optional ``<your-app-name>.tpath`` file in the same directory.
+Put the absolute path to the toolchain's ``bin/`` directory there (i.e. ``echo "</path/to/toolchain>/bin" > <your-app-name>.tpath``).
 **Do not version the file with the toolchain path in your repository!** (e.g. add it to ``.gitignore``).
+The path given in the file will be added to your PATH in the compilation process without polluting the global PATH variable.
+
+Compilation
++++++++++++
 
 Run ``./make.sh --config=<your-app-name>`` to build:
 
@@ -36,16 +46,15 @@ Run ``./make.sh --config=<your-app-name>`` to build:
 * RedBoot if the ``.ecc`` is set to compile RedBoot
 
 Available flags
----------------
++++++++++++++++
 
 * ``-o=<fname>|--output-filename=<fname>`` - set an output filename if building an application, default is ``<your-app-name>``
 * ``-t|--tests`` - build the eCos test suite 
 * ``-r|--rebuild`` - force rebuilding the kernel 
 
 Notes
------
++++++
 
 * the eCos build output will be in the ``<your-app-name>_build/`` directory
-* the toolkit should be relative-path-resistant, meaning that you can just put it anywhere on the system and work from your own directory.
-  Make a local or global symlink to ``make.sh`` if you like, keep your ``.ecc`` files wherever you want etc.
 * remember to ``--rebuild`` after you change your ``.ecc``!
+
