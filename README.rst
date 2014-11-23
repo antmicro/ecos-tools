@@ -14,7 +14,7 @@ Put ``ecosconfig`` in a system-wide localisation (like ``/usr/local/bin``) so th
 .. warning::
 
    ``ecosconfig`` is a 32bit application, thus if you are using a 64bit OS you have to provide 32bit run-time libraries for compatibility.
-   In a Debian-based Linux distributions these could be installed using the command ``sudo apt-get install ia32-libs``.
+   In Debian-based Linux distributions these could be installed using the command ``sudo apt-get install ia32-libs``.
 
 .. note::
 
