@@ -60,14 +60,14 @@ fi
 # include config file to set appropriate variables
 . ./$CONFIG_FILE
 
+ECOS_REPOSITORY=`readlink -f $ECOS_REPOSITORY`
+ECC=`readlink -f $ECC`
+
 if [ -z $ECOS_REPOSITORY ] || [ -z $ECC ]
 then
 	echo "FATAL: The variables \"ECOS_REPOSITORY\" AND \"ECC\" have not been set properly."
 	exit 1
 fi
-
-ECOS_REPOSITORY=`readlink -f $ECOS_REPOSITORY`
-ECC=`readlink -f $ECC`
 
 GCC=`ecc_get_value CYGBLD_GLOBAL_COMMAND_PREFIX`-gcc
 CFLAGS=`ecc_get_value CYGBLD_GLOBAL_CFLAGS`
