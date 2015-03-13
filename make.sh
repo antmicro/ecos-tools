@@ -8,7 +8,12 @@ function get_option {
 }
 
 function ecc_get_value {
-    echo `cat $ECC | grep $1 -A 100 | grep user_value | head -1 | sed 's,user_value,|,g' | cut -f 2 -d '|' | tr -d '"'`
+	RET=`cat $ECC | grep $1 -A 10 | grep -v '#' | grep '_value' | head -1 | awk '{$1=""; print $0}'`
+	# if this value is not set, take the default one
+	if [ -z "$RET" ]; then
+		RET=`cat $ECC | grep $1 -A 10 | grep 'Default' | head -1 | awk '{$1=$2=$3=""; print $0}'`
+	fi
+	echo $RET
 }
 
 
