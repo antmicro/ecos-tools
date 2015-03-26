@@ -39,11 +39,18 @@ The path given in the file will be added to your PATH in the compilation process
 Compilation
 +++++++++++
 
-Run ``./make.sh --config=<your-app-name>`` to build:
+The ``make.sh`` script uses the ``<your-app-name>.config`` and ``<your-app-name>.tpath`` files to get the necessary information on how to compile your application.
+
+If you do not supply the ``--config`` parameter, the first ``.config`` (and a respective ``.tpath`` file, if present) in the working directory will be inferred.
+This way, in the most common use case where you have just one configuration you're working with, you can just use ``./make.sh`` to compile.
+
+This will build:
 
 * the eCos kernel if the ``.ecc`` is set to compile eCos and the *FILES* variable is empty
 * your eCos application and the kernel if the *FILES* variable is set
 * RedBoot if the ``.ecc`` is set to compile RedBoot
+
+In case you need to explicitly specify the config, run ``./make.sh --config=<your-app-name>`` instead.
 
 Available flags
 +++++++++++++++

@@ -50,6 +50,15 @@ done
 
 if [[ -z "$CONFIG" ]]
 then
+        FIRST_FILE=`ls *.config | head -1`
+        if [[ -e "$FIRST_FILE" ]]
+        then
+                CONFIG="${FIRST_FILE%.*}"
+        fi
+fi
+
+if [[ -z "$CONFIG" ]]
+then
 	echo "FATAL: No config file provided."
 	usage
 	exit 1
@@ -62,6 +71,8 @@ then
 	echo "FATAL: The config file \"$CONFIG_FILE\" does not exist."
 	exit 1
 fi
+
+echo "Using file: $CONFIG_FILE"
 
 TPATH_FILE=$CONFIG.tpath
 
@@ -113,6 +124,13 @@ then
    fi
 
 echo "Compiling eCos application..."
-$GCC -g -I./ -g -I${KPATH}/install/include ${FILES} \
-   	-L${KPATH}/install/lib -Ttarget.ld ${CFLAGS} ${ADD_OPT} -nostdlib -o $OUTPUT_FILENAME
+OK=0
+$GCC -Wno-psabi -g -I./ -g -I${KPATH}/install/include ${FILES} \
+     -L${KPATH}/install/lib -Ttarget.ld ${CFLAGS} ${ADD_OPT} -nostdlib -o $OUTPUT_FILENAME && OK=1
+if [ $OK -eq 0 ]
+then
+	echo -e "\e[1;91mCOMPILATION ERROR\e[21;39m!"
+else
+	echo -e "\e[1;32mCOMPILATION SUCCESSFUL\e[21;39m!"
+fi
 fi
